@@ -97,20 +97,27 @@ WSGI_APPLICATION = 'TodoistCloneBack.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 
-MAIN_DATABASE = env('MAIN_DATABASE')
-MAIN_DATABASE_USER = env('MAIN_DATABASE_USER')
-MAIN_DATABASE_PASSWORD = env('MAIN_DATABASE_PASSWORD')
-MAIN_DATABASE_HOST = env('MAIN_DATABASE_HOST')
-MAIN_DATABASE_PORT = env('MAIN_DATABASE_PORT')
+# MAIN_DATABASE = env('MAIN_DATABASE')
+# MAIN_DATABASE_USER = env('MAIN_DATABASE_USER')
+# MAIN_DATABASE_PASSWORD = env('MAIN_DATABASE_PASSWORD')
+# MAIN_DATABASE_HOST = env('MAIN_DATABASE_HOST')
+# MAIN_DATABASE_PORT = env('MAIN_DATABASE_PORT')
+#
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': MAIN_DATABASE,
+#         'USER': MAIN_DATABASE_USER,
+#         'PASSWORD': MAIN_DATABASE_PASSWORD,
+#         'HOST': MAIN_DATABASE_HOST,
+#         'PORT': MAIN_DATABASE_PORT,
+#     }
+# }
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': MAIN_DATABASE,
-        'USER': MAIN_DATABASE_USER,
-        'PASSWORD': MAIN_DATABASE_PASSWORD,
-        'HOST': MAIN_DATABASE_HOST,
-        'PORT': MAIN_DATABASE_PORT,
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
