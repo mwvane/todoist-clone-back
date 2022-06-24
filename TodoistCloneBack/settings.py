@@ -33,7 +33,9 @@ SECRET_KEY = 'django-insecure-s7z1)1_mkkiqwu^&mk5f1dpz5jlvk+yn-zuus7glbmh3@6+*ss
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'test-todoist-clone.herokuapp.com'
+]
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
