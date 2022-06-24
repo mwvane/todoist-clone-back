@@ -9,11 +9,20 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+import os
+import environ
 from pathlib import Path
+
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Take environment variables from .env file
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -87,10 +96,21 @@ WSGI_APPLICATION = 'TodoistCloneBack.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+
+MAIN_DATABASE = env('MAIN_DATABASE')
+MAIN_DATABASE_USER = env('MAIN_DATABASE_USER')
+MAIN_DATABASE_PASSWORD = env('MAIN_DATABASE_PASSWORD')
+MAIN_DATABASE_HOST = env('MAIN_DATABASE_HOST')
+MAIN_DATABASE_PORT = env('MAIN_DATABASE_PORT')
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': MAIN_DATABASE,
+        'USER': MAIN_DATABASE_USER,
+        'PASSWORD': MAIN_DATABASE_PASSWORD,
+        'HOST': MAIN_DATABASE_HOST,
+        'PORT': MAIN_DATABASE_PORT,
     }
 }
 
