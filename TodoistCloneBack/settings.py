@@ -39,7 +39,7 @@ ALLOWED_HOSTS = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8080",
-    "https://todoist-front.herokuapp.com/",
+    "https://todoist-front.herokuapp.com",
 ]
 
 # Application definition
