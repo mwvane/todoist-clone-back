@@ -10,8 +10,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import viewsets
 
-from api.models import Project, Section, Task
-from api.serializers import UserRegistrationSerializer, ProjectSerializer, SectionSerializer, TaskSerializer
+from api.models import Project, Section, Item
+from api.serializers import UserRegistrationSerializer, ProjectSerializer, SectionSerializer, \
+    ItemSerializer
 
 
 @api_view(['POST'])
@@ -60,7 +61,7 @@ class SectionViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
 
-class TaskViewSet(viewsets.ModelViewSet):
-    queryset = Task.objects.all()
-    serializer_class = TaskSerializer
+class ItemViewSet(viewsets.ModelViewSet):
+    queryset = Item.objects.all()
+    serializer_class = ItemSerializer
     permission_classes = [IsAuthenticated]

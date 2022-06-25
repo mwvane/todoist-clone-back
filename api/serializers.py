@@ -4,7 +4,7 @@ from rest_framework import serializers
 from rest_framework.authtoken.models import Token
 from rest_framework.exceptions import ValidationError
 
-from api.models import Project, Section, Task
+from api.models import Project, Section, Item
 
 
 class UserRegistrationSerializer(serializers.Serializer):
@@ -38,10 +38,12 @@ class UserRegistrationSerializer(serializers.Serializer):
 
 
 class ProjectSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
     name = serializers.CharField(required=True)
+    sections = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
-        fields = ('name',)
+        fields = ('id', 'name', 'sections')
         model = Project
 
     def create(self, validated_data):
@@ -50,34 +52,44 @@ class ProjectSerializer(serializers.ModelSerializer):
         project = Project.objects.create(**validated_data)
         return project
 
+    def get_sections(self, instance):
+        sections = instance.sections.all()
+        return SectionSerializer(many=True).to_representation(sections)
+
 
 class SectionSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
     name = serializers.CharField(required=True)
-    project = ProjectSerializer(read_only=True)
     project_id = serializers.PrimaryKeyRelatedField(source='project',
                                                     required=True,
                                                     queryset=Project.objects.all())
 
+    items = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
-        fields = ('name', 'project_id', 'project')
+        fields = ('id', 'name', 'project_id', 'items')
         model = Section
 
     def create(self, validated_data):
         validated_data['user'] = self.context['request'].user
         return super(SectionSerializer, self).create(validated_data)
 
+    def get_items(self, instance):
+        items = instance.items.all()
+        return ItemSerializer(many=True).to_representation(items)
 
-class TaskSerializer(serializers.ModelSerializer):
+
+class ItemSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
     name = serializers.CharField(required=True)
-    section = SectionSerializer(read_only=True)
     section_id = serializers.PrimaryKeyRelatedField(source='section',
                                                     required=True,
                                                     queryset=Section.objects.all())
 
     class Meta:
-        fields = ('name', 'section_id', 'section')
-        model = Task
+        fields = ('id', 'name', 'section_id')
+        model = Item
 
     def create(self, validated_data):
         validated_data['user'] = self.context['request'].user
-        return super(TaskSerializer, self).create(validated_data)
+        return super(ItemSerializer, self).create(validated_data)

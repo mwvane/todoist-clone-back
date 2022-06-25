@@ -13,7 +13,7 @@ class Section(models.Model):
     user = models.ForeignKey(User, db_column='user_id', on_delete=models.CASCADE)
 
 
-class Task(models.Model):
+class Item(models.Model):
     name = models.CharField(max_length=512)
     section = models.ForeignKey(Section, related_name='items', db_column='section_id', on_delete=models.CASCADE)
     user = models.ForeignKey(User, db_column='user_id', on_delete=models.CASCADE)
