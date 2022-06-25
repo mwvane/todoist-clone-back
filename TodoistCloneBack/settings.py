@@ -34,6 +34,7 @@ SECRET_KEY = 'django-insecure-s7z1)1_mkkiqwu^&mk5f1dpz5jlvk+yn-zuus7glbmh3@6+*ss
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    'localhost',
     'test-todoist-clone.herokuapp.com'
 ]
 
